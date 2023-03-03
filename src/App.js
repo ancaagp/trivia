@@ -18,7 +18,7 @@ function App(){
 
     const [score, setScore] = useState(0);
 
-    const [questionStatus, setQuestionStatus] = useState()
+    const [userAnswers, setUserAnswers] = useState(new Map([]))
 
 
     useEffect(() => {
@@ -42,15 +42,27 @@ function App(){
 
     },[]);
 
-    console.log(questions);
+    // console.log(userAnswers);
 
-    // function checkAnswers(score_number){
-    //     let new_score = 0;
-    //     new_score +=score_number;
-    //     setScore(new_score);
-    // }
+    function updateUserAnswer(question, answer){
+        setUserAnswers(oldUserAnswers => {
+            const nextUserAnswers = new Map(oldUserAnswers);
+            nextUserAnswers.set(question, answer)
+            return nextUserAnswers;
+        });
+    }
 
-    console.log(`score is ${score}`);
+    function checkAnswers(){
+        let newScore = 0;
+        questions.map(question => {
+            console.log(question.correct_answer)
+            let userAnswer = userAnswers.get(question.question);
+            if (userAnswer === question.correct_answer){
+                newScore ++
+            }
+        })
+        setScore(newScore);
+    }
 
     const renderedQuestions = questions.map(question => {
         return <Question 
@@ -62,6 +74,8 @@ function App(){
                     all_answers={question.all_answers}
                     difficulty={question.difficulty}
                     // checkAnswers={checkAnswers}
+                    updateUserAnswer={updateUserAnswer}
+                    selectedAnswer={userAnswers.get(question.question)}
                 />
     })
 
@@ -101,6 +115,8 @@ function App(){
                     Start game
                 </div>
             }
+            <div style={{backgroundColor:"white"}}>Your score is {score}/{questions.length}</div>
+            <button onClick={checkAnswers}>Check Answers</button>
         </main>
     )
 }

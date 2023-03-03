@@ -1,7 +1,7 @@
 function Answer(props){
-    console.log(props.answer)
+    //console.log(props.answer)
     const styles = {
-        backgroundColor: (props.answer.isSelected && props.answer.value === props.value) ? "blue" : "white"
+        backgroundColor: (props.selectedAnswer === props.value) ? "blue" : ""
     }
     return <div 
                 style={styles}

@@ -7,20 +7,19 @@ function Question(props) {
 
     const [answer, setAnswer] = useState([]);
 
-    // let score = 0;
-    // answer.isCorrect ? score = 1 : score = 0;
-
-    // function handleChange(){
-    //     props.checkAnswers(score);
-    // }
-
     const selectAnswer = (answer) => {
-        setAnswer({
-            value: answer,
-            isSelected: true,
-            isCorrect: answer === props.correct_answer
-        });
-        // handleChange();
+        props.updateUserAnswer(props.question, answer);
+        // let isCorrect = answer === props.correct_answer; 
+        
+        // if (isCorrect) {
+        //     props.checkAnswers(1);
+        // }
+
+        // setAnswer({
+        //     value: answer,
+        //     isSelected: true,
+        //     isCorrect: isCorrect
+        // });
     };
 
     const renderedAnswers = props.all_answers.map(option => {
@@ -31,6 +30,7 @@ function Question(props) {
                 value={option}
                 selectAnswer={selectAnswer}
                 answer={answer}
+                selectedAnswer={props.selectedAnswer}
             />
         )
     })
