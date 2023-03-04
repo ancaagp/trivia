@@ -14,33 +14,72 @@ function shuffleArray(array) {
 }
 
 function App(){
-    const [questions, setQuestions] = useState([]);
 
-    const [score, setScore] = useState(0);
+    // base states
+    let baseScore = 0;
+    let baseUserAnswers = new Map([])
+    let baseQuestions = []
 
-    const [userAnswers, setUserAnswers] = useState(new Map([]))
+    // states
+    const [questions, setQuestions] = useState(baseQuestions);
+    const [score, setScore] = useState(baseScore);
+    const [userAnswers, setUserAnswers] = useState(baseUserAnswers)
+    const [welcomeScreen, setWelcomeScreen] = useState(true)
 
+
+    const getData = () => {
+        fetch("https://opentdb.com/api.php?amount=5&category=9&type=multiple&")
+        .then(res => res.json())
+        .then(data => {
+            // changing data object so it would have another property that joins all answer options
+            let questions = data.results.map(question => {
+                let answersArray = [...question.incorrect_answers];
+                answersArray.push(question.correct_answer);
+                shuffleArray(answersArray);
+
+                let newQuestion = {
+                    ...question,
+                    all_answers: answersArray
+                };
+                return newQuestion;
+            });
+            setQuestions(questions);
+        });
+    };
 
     useEffect(() => {
-        fetch("https://opentdb.com/api.php?amount=5&category=9&type=multiple&")
-            .then(res => res.json())
-            .then(data => {
-                // changing data object so it would have another property that joins all answer options
-                let questions = data.results.map(question => {
-                    let answersArray = [...question.incorrect_answers];
-                    answersArray.push(question.correct_answer);
-                    shuffleArray(answersArray);
+        getData();
+      },[])
+    
 
-                    let newQuestion = {
-                        ...question,
-                        all_answers: answersArray
-                    };
-                    return newQuestion;
-                });
-                setQuestions(questions);
-            })
+    const resetGame = () => {
+        setQuestions(baseQuestions)
+        setScore(baseScore);
+        setUserAnswers(baseUserAnswers);
+        getData();
+    }
 
-    },[]);
+    // function getData() {
+    //     useEffect(() => {
+    //     fetch("https://opentdb.com/api.php?amount=5&category=9&type=multiple&")
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             // changing data object so it would have another property that joins all answer options
+    //             let questions = data.results.map(question => {
+    //                 let answersArray = [...question.incorrect_answers];
+    //                 answersArray.push(question.correct_answer);
+    //                 shuffleArray(answersArray);
+
+    //                 let newQuestion = {
+    //                     ...question,
+    //                     all_answers: answersArray
+    //                 };
+    //                 return newQuestion;
+    //             });
+    //             setQuestions(questions);
+    //         })
+
+    // },[])};
 
     // console.log(userAnswers);
 
@@ -79,6 +118,9 @@ function App(){
                 />
     })
 
+    const startGame = () => {
+        setWelcomeScreen(prevState => !prevState)
+    }
 
     // useEffect(() => {
     //     async function getQuiz() {
@@ -101,22 +143,17 @@ function App(){
     return (
         <main>
             {
-                questions.length > 0
-                ?
+                welcomeScreen ?
+                <button onClick={startGame}>Start game</button> :
                 <div>
-                    <div>
-                        {renderedQuestions}
-                    </div>
-                    {/* <button onClick={checkAnswers}>Check answers</button> */}
-                </div>
-
-                :
                 <div>
-                    Start game
+                    {renderedQuestions}
                 </div>
+                <div style={{backgroundColor:"white"}}>Your score is {score}/{questions.length}</div>
+                <button onClick={checkAnswers}>Check Answers</button>
+                <button onClick={resetGame}>Play Again</button>
+            </div> 
             }
-            <div style={{backgroundColor:"white"}}>Your score is {score}/{questions.length}</div>
-            <button onClick={checkAnswers}>Check Answers</button>
         </main>
     )
 }
