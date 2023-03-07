@@ -103,9 +103,11 @@ function App(){
         setScore(newScore);
     }
 
+
     const renderedQuestions = questions.map(question => {
-        return <Question 
-                    key={nanoid()}
+        return <div key={nanoid()}>
+            <Question 
+                    // key={nanoid()}
                     id={nanoid()}
                     question={question.question}
                     correct_answer={question.correct_answer}
@@ -116,6 +118,15 @@ function App(){
                     updateUserAnswer={updateUserAnswer}
                     selectedAnswer={userAnswers.get(question.question)}
                 />
+            <hr
+                // key={nanoid()}
+                style={{
+                    background: 'grey',
+                    color: 'grey',
+                    height: '2px',
+                }}
+            />
+        </div>
     })
 
     const startGame = () => {
@@ -141,7 +152,7 @@ function App(){
     // },[])
 
     return (
-        <main>
+        <main className="main">
             {
                 welcomeScreen ?
                 <button onClick={startGame}>Start game</button> :
@@ -149,7 +160,7 @@ function App(){
                 <div>
                     {renderedQuestions}
                 </div>
-                <div style={{backgroundColor:"white"}}>Your score is {score}/{questions.length}</div>
+                <div className="score" style={{backgroundColor:"white"}}>You scored {score}/{questions.length} correct answers</div>
                 <button onClick={checkAnswers}>Check Answers</button>
                 <button onClick={resetGame}>Play Again</button>
             </div> 
