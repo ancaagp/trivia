@@ -9,6 +9,10 @@ body {
     padding: 20px;
 }
 
+.startScreen {
+    text-align: center;
+}
+
 .main {
     /* width: 70vw;
     height: 70vh;
@@ -72,10 +76,16 @@ button {
     border: none;
     padding: 10px 18px;
     font-size: 16px;
+    margin-top: 10px;
 }
 
 .score {
     color: #293264;
     font-size: 16px;
     font-weight: 700;
+}
+
+.buttons{
+    text-align: center;
+
 }

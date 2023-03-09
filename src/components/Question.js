@@ -31,6 +31,7 @@ function Question(props) {
                 selectAnswer={selectAnswer}
                 answer={answer}
                 selectedAnswer={props.selectedAnswer}
+                answerColor={props.answerColor}
             />
         )
     })

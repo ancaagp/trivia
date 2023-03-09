@@ -19,12 +19,15 @@ function App(){
     let baseScore = 0;
     let baseUserAnswers = new Map([])
     let baseQuestions = []
+    let baseGameStatus = "play"
 
     // states
     const [questions, setQuestions] = useState(baseQuestions);
     const [score, setScore] = useState(baseScore);
     const [userAnswers, setUserAnswers] = useState(baseUserAnswers)
     const [welcomeScreen, setWelcomeScreen] = useState(true)
+    const [gameState, setGameState] = useState(baseGameStatus)
+    const [answerColor, setAnswerColor] = useState("")
 
 
     const getData = () => {
@@ -51,11 +54,16 @@ function App(){
         getData();
       },[])
     
+    
+    const startGame = () => {
+        setWelcomeScreen(prevState => !prevState)
+    }
 
     const resetGame = () => {
         setQuestions(baseQuestions)
         setScore(baseScore);
         setUserAnswers(baseUserAnswers);
+        setGameState(baseGameStatus)
         getData();
     }
 
@@ -89,18 +97,27 @@ function App(){
             nextUserAnswers.set(question, answer)
             return nextUserAnswers;
         });
+        questions.map(question =>{
+        if (userAnswers.get(question.question === answer)){
+            setAnswerColor("red")
+        }
+        })
+
     }
 
     function checkAnswers(){
-        let newScore = 0;
-        questions.map(question => {
-            console.log(question.correct_answer)
-            let userAnswer = userAnswers.get(question.question);
-            if (userAnswer === question.correct_answer){
-                newScore ++
-            }
-        })
-        setScore(newScore);
+        if (userAnswers.size === 5) {
+            let newScore = 0;
+            questions.map(question => {
+                console.log(question.correct_answer)
+                let userAnswer = userAnswers.get(question.question);
+                if (userAnswer === question.correct_answer){
+                    newScore ++;
+                }
+            })
+            setScore(newScore);
+            setGameState("results");
+        }
     }
 
 
@@ -117,6 +134,7 @@ function App(){
                     // checkAnswers={checkAnswers}
                     updateUserAnswer={updateUserAnswer}
                     selectedAnswer={userAnswers.get(question.question)}
+                    answerColor={answerColor}
                 />
             <hr
                 // key={nanoid()}
@@ -128,10 +146,6 @@ function App(){
             />
         </div>
     })
-
-    const startGame = () => {
-        setWelcomeScreen(prevState => !prevState)
-    }
 
     // useEffect(() => {
     //     async function getQuiz() {
@@ -151,19 +165,37 @@ function App(){
     //     console.log(data)
     // },[])
 
+    console.log(userAnswers.size, userAnswers)
+
     return (
         <main className="main">
             {
                 welcomeScreen ?
-                <button onClick={startGame}>Start game</button> :
-                <div>
-                <div>
-                    {renderedQuestions}
+                <div className="startScreen">
+                    <h1>Welcome to Trivia!</h1>
+                    <h3>This is a general knowledge quiz with multiple choices.</h3>
+                    <button onClick={startGame}>Start game</button>
                 </div>
-                <div className="score" style={{backgroundColor:"white"}}>You scored {score}/{questions.length} correct answers</div>
-                <button onClick={checkAnswers}>Check Answers</button>
-                <button onClick={resetGame}>Play Again</button>
-            </div> 
+                :
+                <div>
+                    <div>
+                        {renderedQuestions}
+                    </div>
+                    <div className="buttons">
+                        {
+                            gameState === "results" ?
+                            <div>
+
+                            <div className="score" style={{backgroundColor:"white"}}>You scored {score}/{questions.length} correct answers</div>
+                            <button onClick={resetGame}>Play Again</button>
+                            </div>
+                            :
+                            <button onClick={checkAnswers}>Check Answers</button>
+                        }
+
+
+                    </div>
+                </div> 
             }
         </main>
     )
