@@ -5,22 +5,12 @@ import Answer from './Answer';
 
 function Question(props) {
 
-    const [answer, setAnswer] = useState([]);
-
     const selectAnswer = (answer) => {
         props.updateUserAnswer(props.question, answer);
-        // let isCorrect = answer === props.correct_answer; 
-        
-        // if (isCorrect) {
-        //     props.checkAnswers(1);
-        // }
-
-        // setAnswer({
-        //     value: answer,
-        //     isSelected: true,
-        //     isCorrect: isCorrect
-        // });
     };
+
+
+    console.log(props.correct_answer)
 
     const renderedAnswers = props.all_answers.map(option => {
         return ( 
@@ -29,9 +19,10 @@ function Question(props) {
                 question_id={props.id}
                 value={option}
                 selectAnswer={selectAnswer}
-                answer={answer}
+                correct_answer={props.correct_answer}
                 selectedAnswer={props.selectedAnswer}
                 answerColor={props.answerColor}
+                gameState={props.gameState}
             />
         )
     })

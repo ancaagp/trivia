@@ -89,3 +89,15 @@ button {
     text-align: center;
 
 }
+
+.blob1 {
+    position: fixed;
+    left: 80%;
+    /* right: -50.88%; */
+    top: 10%;
+    bottom: 40%;
+    transform: rotate(-129deg);
+    mix-blend-mode: color;
+}
+
+

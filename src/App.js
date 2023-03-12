@@ -2,6 +2,8 @@ import Question from "./components/Question";
 import './style.css';
 import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
+import Confetti from 'react-confetti';
+import blob1 from './images/blob1.svg';
 
 // shuffle function
 function shuffleArray(array) {
@@ -19,17 +21,21 @@ function App(){
     let baseScore = 0;
     let baseUserAnswers = new Map([])
     let baseQuestions = []
-    let baseGameStatus = "play"
+    let baseGameState = "play"
 
     // states
     const [questions, setQuestions] = useState(baseQuestions);
     const [score, setScore] = useState(baseScore);
     const [userAnswers, setUserAnswers] = useState(baseUserAnswers)
     const [welcomeScreen, setWelcomeScreen] = useState(true)
-    const [gameState, setGameState] = useState(baseGameStatus)
+    const [gameState, setGameState] = useState(baseGameState)
     const [answerColor, setAnswerColor] = useState("")
+    const [windowSize, setWindowSize] = useState({
+        width: undefined,
+        height: undefined
+    })
 
-
+    // getting the data from the API
     const getData = () => {
         fetch("https://opentdb.com/api.php?amount=5&category=9&type=multiple&")
         .then(res => res.json())
@@ -50,8 +56,17 @@ function App(){
         });
     };
 
+    // setting window size to take the current window size
+    const handleWindowSize = () => {
+        setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+    }
+
     useEffect(() => {
         getData();
+        window.onresize = () => handleWindowSize();
       },[])
     
     
@@ -63,7 +78,7 @@ function App(){
         setQuestions(baseQuestions)
         setScore(baseScore);
         setUserAnswers(baseUserAnswers);
-        setGameState(baseGameStatus)
+        setGameState(baseGameState)
         getData();
     }
 
@@ -131,10 +146,10 @@ function App(){
                     incorrect_answers={question.incorrect_answers}
                     all_answers={question.all_answers}
                     difficulty={question.difficulty}
-                    // checkAnswers={checkAnswers}
                     updateUserAnswer={updateUserAnswer}
                     selectedAnswer={userAnswers.get(question.question)}
                     answerColor={answerColor}
+                    gameState={gameState}
                 />
             <hr
                 // key={nanoid()}
@@ -165,10 +180,14 @@ function App(){
     //     console.log(data)
     // },[])
 
-    console.log(userAnswers.size, userAnswers)
-
     return (
         <main className="main">
+        <img className='blob1' src={blob1} alt='' />
+            {score === 5 && <Confetti 
+                  width={windowSize.width}
+                  height={windowSize.height}
+                  />
+            }
             {
                 welcomeScreen ?
                 <div className="startScreen">
