@@ -82,30 +82,6 @@ function App(){
         getData();
     }
 
-    // function getData() {
-    //     useEffect(() => {
-    //     fetch("https://opentdb.com/api.php?amount=5&category=9&type=multiple&")
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             // changing data object so it would have another property that joins all answer options
-    //             let questions = data.results.map(question => {
-    //                 let answersArray = [...question.incorrect_answers];
-    //                 answersArray.push(question.correct_answer);
-    //                 shuffleArray(answersArray);
-
-    //                 let newQuestion = {
-    //                     ...question,
-    //                     all_answers: answersArray
-    //                 };
-    //                 return newQuestion;
-    //             });
-    //             setQuestions(questions);
-    //         })
-
-    // },[])};
-
-    // console.log(userAnswers);
-
     function updateUserAnswer(question, answer){
         setUserAnswers(oldUserAnswers => {
             const nextUserAnswers = new Map(oldUserAnswers);
@@ -162,23 +138,6 @@ function App(){
         </div>
     })
 
-    // useEffect(() => {
-    //     async function getQuiz() {
-    //         console.log('fetching');
-    //         const url = "https://opentdb.com/api.php?amount=5&category=9";
-    //         const response = await fetch(url);
-    //         const json = await response.json();
-    //         return json.results;
-    //     }
-    //     getQuiz()
-    // },[])
-
-    // useEffect(async () => {
-    //     const res = await fetch("https://opentdb.com/api.php?amount=5&category=9");
-    //     const data = await res.json();
-    //     setQuestions(data)
-    //     console.log(data)
-    // },[])
 
     return (
         <main className="main">
@@ -211,8 +170,6 @@ function App(){
                             :
                             <button onClick={checkAnswers}>Check Answers</button>
                         }
-
-
                     </div>
                 </div> 
             }

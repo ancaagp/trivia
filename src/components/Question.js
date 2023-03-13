@@ -1,6 +1,5 @@
 import '../style.css';
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
 import Answer from './Answer';
 
 function Question(props) {
@@ -8,7 +7,6 @@ function Question(props) {
     const selectAnswer = (answer) => {
         props.updateUserAnswer(props.question, answer);
     };
-
 
     console.log(props.correct_answer)
 

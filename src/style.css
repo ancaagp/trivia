@@ -14,18 +14,6 @@ body {
 }
 
 .main {
-    /* width: 70vw;
-    height: 70vh;
-    background-color: #F5F7FB;
-    display: flex;
-    align-items: center;
-    justify-content: center; */
-
-    /* position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%); */
-
     margin: 30px auto;
     max-width: 800px;
     height: auto;
@@ -93,7 +81,7 @@ button {
 .blob1 {
     position: fixed;
     left: 80%;
-    /* right: -50.88%; */
+    right: -50.88%;
     top: 10%;
     bottom: 40%;
     transform: rotate(-129deg);
