@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import Confetti from 'react-confetti';
 import decodeHTML from 'decode-html';
 import blob1 from './images/blob1.svg';
+import blob2 from './images/blob2.svg';
 import './style.css';
 
 // shuffle function
@@ -159,6 +160,7 @@ function App(){
                 :
                 <div className="questionsBox">
                     <img className='blob1' src={blob1} alt='' />
+                    <img className='blob2' src={blob2} alt='' />
                     <div>
                         {renderedQuestions}
                     </div>

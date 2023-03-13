@@ -83,10 +83,18 @@ button {
 .blob1 {
     position: absolute;
     mix-blend-mode: color;
-    left: 90%;
-    bottom: 70%;
     left: 80%;
+    bottom: 70%;
     transform: rotate(310deg);
 }
+
+.blob2 {
+    position: absolute;
+    mix-blend-mode: darken;
+    transform: rotate(310deg);
+    top: 85%;
+    right: 80%;
+}
+
 
 
