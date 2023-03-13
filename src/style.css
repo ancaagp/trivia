@@ -22,14 +22,10 @@ body {
 }
 
 .question-page {
-    /* width: 800;
-    height: 800px; */
     background-color: #F5F7FB;
 }
 
 .question-box {
-    /* width: 500px;
-    height: 100px; */
     width: 100%;
     background-color: #F5F7FB;
 }
@@ -42,7 +38,6 @@ body {
 
 .answers-box {
     display: flex;
-    /* justify-content: space-around; */
     color: #293264;
     font-size: 16px;
 }
@@ -71,21 +66,27 @@ button {
     color: #293264;
     font-size: 16px;
     font-weight: 700;
+    background-color: #F5F7FB;
 }
 
-.buttons{
+.buttons {
     text-align: center;
 
 }
 
+.questionsBox {
+    overflow: hidden;
+    position: absolute;
+    padding: 50px;
+}
+
 .blob1 {
-    position: fixed;
-    left: 80%;
-    right: -50.88%;
-    top: 10%;
-    bottom: 40%;
-    transform: rotate(-129deg);
+    position: absolute;
     mix-blend-mode: color;
+    left: 90%;
+    bottom: 70%;
+    left: 80%;
+    transform: rotate(310deg);
 }
 
 

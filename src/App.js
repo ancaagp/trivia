@@ -1,9 +1,10 @@
 import Question from "./components/Question";
-import './style.css';
 import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import Confetti from 'react-confetti';
+import decodeHTML from 'decode-html';
 import blob1 from './images/blob1.svg';
+import './style.css';
 
 // shuffle function
 function shuffleArray(array) {
@@ -35,9 +36,11 @@ function App(){
         height: undefined
     })
 
+    console.log(decodeHTML('&lt;div class="hidden"&gt;NON&amp;SENSE&apos;s&lt;/div&gt;'));
+
     // getting the data from the API
     const getData = () => {
-        fetch("https://opentdb.com/api.php?amount=5&category=9&type=multiple&")
+        fetch("https://opentdb.com/api.php?amount=5&category=9&type=multiple")
         .then(res => res.json())
         .then(data => {
             // changing data object so it would have another property that joins all answer options
@@ -141,7 +144,6 @@ function App(){
 
     return (
         <main className="main">
-        <img className='blob1' src={blob1} alt='' />
             {score === 5 && <Confetti 
                   width={windowSize.width}
                   height={windowSize.height}
@@ -155,14 +157,15 @@ function App(){
                     <button onClick={startGame}>Start game</button>
                 </div>
                 :
-                <div>
+                <div className="questionsBox">
+                    <img className='blob1' src={blob1} alt='' />
                     <div>
                         {renderedQuestions}
                     </div>
                     <div className="buttons">
                         {
                             gameState === "results" ?
-                            <div>
+                            <div className="scoreBox">
 
                             <div className="score" style={{backgroundColor:"white"}}>You scored {score}/{questions.length} correct answers</div>
                             <button onClick={resetGame}>Play Again</button>

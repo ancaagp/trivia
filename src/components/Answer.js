@@ -1,3 +1,6 @@
+import '../style.css';
+import decodeHTML from 'decode-html';
+
 function Answer(props){
     let styles = ""
     if (props.gameState === "play"){
@@ -20,7 +23,8 @@ function Answer(props){
     
     return <div className="answer"
                 style={styles}
-                onClick={() => props.selectAnswer(props.value)}>
+                onClick={() => props.selectAnswer(props.value)}
+            >
                 {props.value}
             </div>
 }
