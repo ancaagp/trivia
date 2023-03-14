@@ -1,20 +1,20 @@
 import '../style.css';
-import decodeHTML from 'decode-html';
+import { decodeHtml } from '../utils';
 
 function Answer(props){
     let styles = ""
     if (props.gameState === "play"){
         styles = {
-            backgroundColor: (props.selectedAnswer === props.value) ? "#D6DBF5" : ""}
+            backgroundColor: (props.selectedAnswer === props.value) ? "#dda15e" : ""}
     } else if (props.gameState === "results") {
         let backgroundColor = "";
         let color = "";
         if (props.selectedAnswer === props.value && props.value === props.correct_answer) {
-            backgroundColor = "#94D7A2";
+            backgroundColor = "#ccd5ae";
         } else if (props.selectedAnswer === props.value && props.value !== props.correct_answer) {
-            backgroundColor = "#F8BCBC";
+            backgroundColor = "#ffb4a2";
         } else if (props.selectedAnswer !== props.value && props.value === props.correct_answer) {
-            backgroundColor = "#94D7A2";
+            backgroundColor = "#ccd5ae";
         } else {
             color = "grey";
         }
@@ -25,7 +25,7 @@ function Answer(props){
                 style={styles}
                 onClick={() => props.selectAnswer(props.value)}
             >
-                {props.value}
+                {decodeHtml(props.value)}
             </div>
 }
 

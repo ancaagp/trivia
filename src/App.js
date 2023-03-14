@@ -2,20 +2,10 @@ import Question from "./components/Question";
 import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import Confetti from 'react-confetti';
-import decodeHTML from 'decode-html';
 import blob1 from './images/blob1.svg';
 import blob2 from './images/blob2.svg';
 import './style.css';
-
-// shuffle function
-function shuffleArray(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-}
+import { shuffleArray, decodeHtml} from './utils';
 
 function App(){
 
@@ -37,7 +27,7 @@ function App(){
         height: undefined
     })
 
-    console.log(decodeHTML('&lt;div class="hidden"&gt;NON&amp;SENSE&apos;s&lt;/div&gt;'));
+    console.log(decodeHtml('&lt;div class="hidden"&gt;NON&amp;SENSE&apos;s&lt;/div&gt;'));
 
     // getting the data from the API
     const getData = () => {
@@ -46,6 +36,7 @@ function App(){
         .then(data => {
             // changing data object so it would have another property that joins all answer options
             let questions = data.results.map(question => {
+                question.question = decodeHtml(question.question);
                 let answersArray = [...question.incorrect_answers];
                 answersArray.push(question.correct_answer);
                 shuffleArray(answersArray);
@@ -169,7 +160,7 @@ function App(){
                             gameState === "results" ?
                             <div className="scoreBox">
 
-                            <div className="score" style={{backgroundColor:"white"}}>You scored {score}/{questions.length} correct answers</div>
+                            <div className="score">You scored {score}/{questions.length} correct answers</div>
                             <button onClick={resetGame}>Play Again</button>
                             </div>
                             :
