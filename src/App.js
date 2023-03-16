@@ -27,8 +27,6 @@ function App(){
         height: undefined
     })
 
-    console.log(decodeHtml('&lt;div class="hidden"&gt;NON&amp;SENSE&apos;s&lt;/div&gt;'));
-
     // getting the data from the API
     const getData = () => {
         fetch("https://opentdb.com/api.php?amount=5&category=9&type=multiple")
@@ -110,7 +108,6 @@ function App(){
     const renderedQuestions = questions.map(question => {
         return <div key={nanoid()}>
             <Question 
-                    // key={nanoid()}
                     id={nanoid()}
                     question={question.question}
                     correct_answer={question.correct_answer}
@@ -123,7 +120,6 @@ function App(){
                     gameState={gameState}
                 />
             <hr
-                // key={nanoid()}
                 style={{
                     background: 'grey',
                     color: 'grey',

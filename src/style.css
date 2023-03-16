@@ -39,20 +39,31 @@ body {
 }
 
 .answers-box {
-    display: flex;
     color: #283618;
     font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .answer {
-    border: 1px solid #283618;
-    border-radius: 0.3rem;
-    padding: 2px 8px;
-    margin: 10px 0;
     font-size: 18px;
     font-weight: 400;
-    margin-right: 5px;
+    margin: 10px 5px;
 }
+
+.answerText {
+    width: fit-content;
+    border: 1px solid #283618;
+    border-radius: 0.3rem;
+    padding: 5px 10px;
+}
+
+@media (min-width: 600px) {
+    .answers-box {
+      flex-wrap: nowrap;
+    }
+  }
 
 button {
     background-color: #606c38;
@@ -81,6 +92,13 @@ button {
     position: absolute;
     padding: 50px;
     background-color: #faedcd;
+    width: 100%;
+}
+
+@media (min-width: 600px) {
+    .questionsBox {
+      width: 50%;
+    }
 }
 
 .blob1 {
