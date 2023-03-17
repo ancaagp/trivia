@@ -4,9 +4,7 @@
 }
 
 body {
-    background-color: #f2e9d2;
-    margin: 0;
-    padding: 20px;
+    background-color: black;
 }
 
 .startScreen {
@@ -16,20 +14,41 @@ body {
 }
 
 .main {
-    margin: 30px auto;
     max-width: 800px;
-    height: auto;
-    border-radius: 3px;
-    background-color: #faedcd;
 }
 
-.question-page {
+.questionsBox {
+    overflow: hidden;
+    position: absolute;
+    padding: 50px;
     background-color: #faedcd;
-}
-
-.question-box {
     width: 100%;
-    background-color: #faedcd;
+}
+
+@media (min-width: 600px) {
+    .main {
+        margin: 30px auto;
+    }
+    .questionsBox {
+        max-width: 800px;
+        margin: auto;
+    }
+}
+
+.blob1 {
+    position: absolute;
+    mix-blend-mode: color;
+    left: 80%;
+    bottom: 70%;
+    transform: rotate(310deg);
+}
+
+.blob2 {
+    position: absolute;
+    mix-blend-mode: color-burn;
+    transform: rotate(310deg);
+    top: 85%;
+    right: 80%;
 }
 
 .question {
@@ -87,35 +106,6 @@ button {
 
 }
 
-.questionsBox {
-    overflow: hidden;
-    position: absolute;
-    padding: 50px;
-    background-color: #faedcd;
-    width: 100%;
-}
-
-@media (min-width: 600px) {
-    .questionsBox {
-      width: 50%;
-    }
-}
-
-.blob1 {
-    position: absolute;
-    mix-blend-mode: color;
-    left: 80%;
-    bottom: 70%;
-    transform: rotate(310deg);
-}
-
-.blob2 {
-    position: absolute;
-    mix-blend-mode: color-burn;
-    transform: rotate(310deg);
-    top: 85%;
-    right: 80%;
-}
 
 
 

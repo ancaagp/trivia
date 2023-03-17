@@ -22,10 +22,9 @@ function Answer(props){
     }
     
     return <div className="answer"
-                style={styles}
                 onClick={() => props.selectAnswer(props.value)}
             >
-                <div className="answerText">
+                <div className="answerText" style={styles}>
                     {decodeHtml(props.value)}
                 </div>
                 
