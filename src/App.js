@@ -1,11 +1,13 @@
-import Question from "./components/Question";
+import './style.css';
 import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
+import { shuffleArray, decodeHtml} from './utils';
+import Question from "./components/Question";
 import Confetti from 'react-confetti';
 import blob1 from './images/blob1.svg';
 import blob2 from './images/blob2.svg';
-import './style.css';
-import { shuffleArray, decodeHtml} from './utils';
+
+
 
 function App(){
 
@@ -121,9 +123,11 @@ function App(){
                 />
             <hr
                 style={{
-                    background: 'grey',
-                    color: 'grey',
-                    height: '2px',
+                    background: '#283618',
+                    height: '1px',
+                    opacity: '50%',
+                    border: 'none',
+                    margin: '10px'
                 }}
             />
         </div>

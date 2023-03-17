@@ -2,29 +2,32 @@ import '../style.css';
 import { decodeHtml } from '../utils';
 
 function Answer(props){
-    let styles = ""
-    if (props.gameState === "play"){
-        styles = {
-            backgroundColor: (props.selectedAnswer === props.value) ? "#dda15e" : ""}
-    } else if (props.gameState === "results") {
-        let backgroundColor = "";
-        let color = "";
-        if (props.selectedAnswer === props.value && props.value === props.correct_answer) {
-            backgroundColor = "#ccd5ae";
-        } else if (props.selectedAnswer === props.value && props.value !== props.correct_answer) {
-            backgroundColor = "#ffb4a2";
-        } else if (props.selectedAnswer !== props.value && props.value === props.correct_answer) {
-            backgroundColor = "#ccd5ae";
-        } else {
-            color = "grey";
-        }
-        styles = {backgroundColor, color};
+    let playState = props.gameState === "play";
+    let resultsState = props.gameState === "results";
+    let selectedAnswer = props.selectedAnswer === props.value;
+    let correctAnswer = props.value === props.correct_answer;
+    let extraClassName = "";
+
+    if (playState && selectedAnswer) {
+        extraClassName = "selected-answer";
     }
-    
+
+    if (resultsState) {
+        if (selectedAnswer && correctAnswer) {
+            extraClassName = "correct-answer";
+        } else if (selectedAnswer && !correctAnswer) {
+            extraClassName = "incorrect-answer";
+        } else if (!selectedAnswer && correctAnswer) {
+            extraClassName = "correct-answer";
+        } else {
+            extraClassName = "other-answer";
+        }  
+    }
+
     return <div className="answer"
                 onClick={() => props.selectAnswer(props.value)}
             >
-                <div className="answerText" style={styles}>
+                <div className={"answerText " + extraClassName } >
                     {decodeHtml(props.value)}
                 </div>
                 
