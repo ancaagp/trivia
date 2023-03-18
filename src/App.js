@@ -15,15 +15,13 @@ function App(){
     let baseScore = 0;
     let baseUserAnswers = new Map([])
     let baseQuestions = []
-    let baseGameState = "play"
+    let baseGameState = "welcome"
 
     // states
     const [questions, setQuestions] = useState(baseQuestions);
     const [score, setScore] = useState(baseScore);
     const [userAnswers, setUserAnswers] = useState(baseUserAnswers)
-    const [welcomeScreen, setWelcomeScreen] = useState(true)
     const [gameState, setGameState] = useState(baseGameState)
-    const [answerColor, setAnswerColor] = useState("")
     const [windowSize, setWindowSize] = useState({
         width: undefined,
         height: undefined
@@ -66,14 +64,14 @@ function App(){
     
     
     const startGame = () => {
-        setWelcomeScreen(prevState => !prevState)
+        setGameState("play")
     }
 
     const resetGame = () => {
         setQuestions(baseQuestions)
         setScore(baseScore);
         setUserAnswers(baseUserAnswers);
-        setGameState(baseGameState)
+        setGameState("play")
         getData();
     }
 
@@ -83,12 +81,6 @@ function App(){
             nextUserAnswers.set(question, answer)
             return nextUserAnswers;
         });
-        questions.map(question =>{
-        if (userAnswers.get(question.question === answer)){
-            setAnswerColor("red")
-        }
-        })
-
     }
 
     function checkAnswers(){
@@ -118,9 +110,10 @@ function App(){
                     difficulty={question.difficulty}
                     updateUserAnswer={updateUserAnswer}
                     selectedAnswer={userAnswers.get(question.question)}
-                    answerColor={answerColor}
                     gameState={gameState}
-                />
+            />
+
+            {/* adding line divider between questions */}
             <hr
                 style={{
                     background: '#283618',
@@ -142,7 +135,7 @@ function App(){
                   />
             }
             {
-                welcomeScreen ?
+                gameState === "welcome" ?
                 <div className="startScreen">
                     <h1>Welcome to Trivia!</h1>
                     <h3>This is a general knowledge quiz with multiple choices.</h3>

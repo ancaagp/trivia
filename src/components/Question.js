@@ -3,7 +3,6 @@ import { nanoid } from 'nanoid';
 import Answer from './Answer';
 
 function Question(props) {
-
     const selectAnswer = (answer) => {
         props.updateUserAnswer(props.question, answer);
     };
@@ -19,7 +18,6 @@ function Question(props) {
                 selectAnswer={selectAnswer}
                 correct_answer={props.correct_answer}
                 selectedAnswer={props.selectedAnswer}
-                answerColor={props.answerColor}
                 gameState={props.gameState}
             />
         )

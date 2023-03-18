@@ -10,27 +10,23 @@ function Answer(props){
 
     if (playState && selectedAnswer) {
         extraClassName = "selected-answer";
-    }
-
-    if (resultsState) {
-        if (selectedAnswer && correctAnswer) {
+    } else if (resultsState) {
+        if (correctAnswer) {
             extraClassName = "correct-answer";
         } else if (selectedAnswer && !correctAnswer) {
             extraClassName = "incorrect-answer";
-        } else if (!selectedAnswer && correctAnswer) {
-            extraClassName = "correct-answer";
         } else {
             extraClassName = "other-answer";
         }  
     }
 
-    return <div className="answer"
-                onClick={() => props.selectAnswer(props.value)}
-            >
-                <div className={"answerText " + extraClassName } >
+    return <div 
+                className="answer"
+                onClick={() => props.selectAnswer(props.value)} >
+                <div 
+                    className={"answerText " + extraClassName } >
                     {decodeHtml(props.value)}
                 </div>
-                
             </div>
 }
 
