@@ -129,6 +129,7 @@ function App(){
         </div>
     })
 
+    // condensing the display options into functions for better readability
     function welcomeScreen () {
         return (
             <div className="startScreen">
@@ -163,6 +164,7 @@ function App(){
         )
     }
 
+    // conditional redering using only 1 option
     let toDisplay = ""
     if (gameState === "welcome") {
         toDisplay = welcomeScreen()

@@ -7,8 +7,6 @@ function Question(props) {
         props.updateUserAnswer(props.question, answer);
     };
 
-    console.log(props.correct_answer)
-
     const renderedAnswers = props.all_answers.map(option => {
         return ( 
             <Answer 

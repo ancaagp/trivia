@@ -8,6 +8,7 @@ function Answer(props){
     let correctAnswer = props.value === props.correct_answer;
     let extraClassName = "";
 
+    // adding the relevant CSS class name to the answer
     if (playState && selectedAnswer) {
         extraClassName = "selected-answer";
     } else if (resultsState) {
