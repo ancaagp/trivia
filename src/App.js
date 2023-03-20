@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { shuffleArray, decodeHtml} from './utils';
 import Question from "./components/Question";
+import LoadingScreen from './components/LoadingScreen';
 import Confetti from 'react-confetti';
 import blob1 from './images/blob1.svg';
 import blob2 from './images/blob2.svg';
@@ -22,6 +23,7 @@ function App(){
     const [score, setScore] = useState(baseScore);
     const [userAnswers, setUserAnswers] = useState(baseUserAnswers)
     const [gameState, setGameState] = useState(baseGameState)
+    const [loading, setLoading] = useState(true)
     const [windowSize, setWindowSize] = useState({
         width: undefined,
         height: undefined
@@ -29,6 +31,7 @@ function App(){
 
     // getting the data from the API
     const getData = () => {
+        setLoading(true);
         fetch("https://opentdb.com/api.php?amount=5&category=9&type=multiple")
         .then(res => res.json())
         .then(data => {
@@ -43,6 +46,7 @@ function App(){
                     ...question,
                     all_answers: answersArray
                 };
+                setLoading(false);
                 return newQuestion;
             });
             setQuestions(questions);
@@ -98,7 +102,6 @@ function App(){
         }
     }
 
-
     const renderedQuestions = questions.map(question => {
         return <div key={nanoid()}>
             <Question 
@@ -126,6 +129,48 @@ function App(){
         </div>
     })
 
+    function welcomeScreen () {
+        return (
+            <div className="startScreen">
+                <h1>Welcome to Trivia!</h1>
+                <h3>This is a general knowledge quiz with multiple choices.</h3>
+                <button onClick={startGame}>Start game</button>
+            </div>
+        )
+    }
+
+    function questionBox () {
+        return (
+            <div className="questionsBox">
+            <img className='blob1' src={blob1} alt='' />
+            <img className='blob2' src={blob2} alt='' />
+            <div> 
+                {renderedQuestions}
+            </div>
+            <div className="buttons">
+                {
+                    gameState === "results" ?
+                    <div className="scoreBox">
+
+                    <div className="score">You scored {score}/{questions.length} correct answers</div>
+                    <button onClick={resetGame}>Play Again</button>
+                    </div>
+                    :
+                    <button onClick={checkAnswers}>Check Answers</button>
+                }
+            </div>
+        </div> 
+        )
+    }
+
+    let toDisplay = ""
+    if (gameState === "welcome") {
+        toDisplay = welcomeScreen()
+    } else if (loading) {
+        toDisplay = <LoadingScreen />
+    } else {
+        toDisplay = questionBox()
+    }
 
     return (
         <main className="main">
@@ -134,36 +179,11 @@ function App(){
                   height={windowSize.height}
                   />
             }
-            {
-                gameState === "welcome" ?
-                <div className="startScreen">
-                    <h1>Welcome to Trivia!</h1>
-                    <h3>This is a general knowledge quiz with multiple choices.</h3>
-                    <button onClick={startGame}>Start game</button>
-                </div>
-                :
-                <div className="questionsBox">
-                    <img className='blob1' src={blob1} alt='' />
-                    <img className='blob2' src={blob2} alt='' />
-                    <div>
-                        {renderedQuestions}
-                    </div>
-                    <div className="buttons">
-                        {
-                            gameState === "results" ?
-                            <div className="scoreBox">
-
-                            <div className="score">You scored {score}/{questions.length} correct answers</div>
-                            <button onClick={resetGame}>Play Again</button>
-                            </div>
-                            :
-                            <button onClick={checkAnswers}>Check Answers</button>
-                        }
-                    </div>
-                </div> 
-            }
+            {toDisplay}
         </main>
     )
 }
+
+
 
 export default App;

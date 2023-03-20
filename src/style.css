@@ -108,6 +108,12 @@ button {
     text-align: center;
 }
 
+.loading {
+    width: 800px;
+    display: flex;
+    justify-content: center;
+}
+
 @media (min-width: 600px) {
     .main {
         margin: 30px auto;

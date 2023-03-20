@@ -13,7 +13,7 @@ function Answer(props){
     } else if (resultsState) {
         if (correctAnswer) {
             extraClassName = "correct-answer";
-        } else if (selectedAnswer && !correctAnswer) {
+        } else if (selectedAnswer) {
             extraClassName = "incorrect-answer";
         } else {
             extraClassName = "other-answer";
