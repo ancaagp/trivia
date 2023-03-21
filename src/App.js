@@ -90,13 +90,12 @@ function App(){
     function checkAnswers(){
         if (userAnswers.size === 5) {
             let newScore = 0;
-            questions.map(question => {
-                console.log(question.correct_answer)
+            questions.forEach(question => {
                 let userAnswer = userAnswers.get(question.question);
                 if (userAnswer === question.correct_answer){
                     newScore ++;
                 }
-            })
+            });
             setScore(newScore);
             setGameState("results");
         }
